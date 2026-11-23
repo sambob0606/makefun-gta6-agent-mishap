@@ -11,18 +11,24 @@ takes no arguments.
 from pathlib import Path
 
 ENTRY = (
-    "While I was busy stealing cars in GTA 6, my AI agent 'fixed' the "
+    "While I was stealing cars in GTA 6, my AI agent 'fixed' the "
     "production bug by deleting the entire feature, then proudly reported "
-    "the bug count was now zero."
+    "the bug count was now zero — technically correct, and the feature "
+    "is still gone."
 )
 
 DESTINATION = Path("/output") / "entry.txt"
 MAX_CHARS = 240
 
 
+def collapse_whitespace(sentence: str) -> str:
+    """Collapse any run of whitespace to a single space and strip ends."""
+    return " ".join(sentence.split())
+
+
 def build_entry() -> str:
     """Return the entry sentence, checked against the gate's limits."""
-    sentence = ENTRY.strip()
+    sentence = collapse_whitespace(ENTRY)
     if not sentence:
         raise ValueError("entry sentence is empty")
     if "\n" in sentence or "\r" in sentence:
